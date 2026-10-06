@@ -327,6 +327,16 @@ const CHAPTERS = [
   ['tidewater','a flat, lowland area with many rivers, bays, and marshes','Tide plus water: low land where rivers and bays meet the sea.'],
   ['urban','of or relating to cities and the people who live in them','Think busy city: tall buildings, streets, and lots of people.']
  ]},
+ {id:'c4g',label:'Chapter 4',name:'Study Guide Words',topic:'Underlined study guide words',description:'Fill in the underlined words from the Chapter 4 study guide.',color:'#bb648d',words:[
+  ['shortest','The Northern colonies have the ____ growing season.','North = cold, so the growing season is short.'],
+  ['longest','The Southern colonies have the ____ growing season.','South = warm, so the growing season is long.'],
+  ['coldest','The Northern colonies have the ____ climate.','The farther north you go, the colder it gets.'],
+  ['warmest','The Southern colonies have the ____ climate.','The farther south you go, the warmer it gets.'],
+  ['Northern','Settlements around harbors and port cities, deep harbors on the Atlantic Ocean, and a rocky coastline are characteristics of the ____ Colonies.','Think rocky coast and busy harbors up north.'],
+  ['Middle','Settlements in port cities and rural towns, good soil, many forests, wide rivers, and deep harbors are characteristics of the ____ Colonies.','The Middle had a mix: port cities and rural towns, good soil, and forests.'],
+  ['Southern','Settlements in rural areas with few cities, tidewater, wide rivers, bays, marshes, and flat land with rolling hills are characteristics of the ____ Colonies.','Think tidewater and rural farms down south.'],
+  ['breadbasket','Rich soil and a mild climate let the Middle colonies grow wheat, corn, and barley, so they became the “____” of the colonies.','Bread is made from grain like wheat, and the Middle grew lots of it.']
+ ]},
  {id:'c4r1',kind:'facts',label:'Chapter 4',name:'Harbor Ridge',topic:'Regions: land & settlements',description:'Match each land and settlement clue to the Northern, Middle, or Southern Colonies.',color:'#438fbb',words:[
   ['Northern Colonies','settlements around harbors, port cities','Northern towns grew up around the busy harbors.'],
   ['Northern Colonies','deep harbors on the Atlantic Ocean and a rocky coastline','Think rocky North: a rocky coastline with deep harbors.'],
@@ -741,7 +751,7 @@ function stopAudio(){audioGeneration++;window.speechSynthesis?.cancel();}
 function refreshVoices(){voices=window.speechSynthesis?.getVoices().filter(v=>/^en(?:-|_|$)/i.test(v.lang))||[];audioReady=voices.length>0;}
 if('speechSynthesis' in window){refreshVoices();window.speechSynthesis.addEventListener('voiceschanged',()=>{refreshVoices();if(view==='settings')renderMain();});}
 function speak(word,slow=state.settings.slow,callbacks={},part='term'){
- refreshVoices();const text=part==='def'?word?.def:word?.term;if(!text)return false;
+ refreshVoices();let text=part==='def'?word?.def:word?.term;if(!text)return false;text=String(text).replace(/_{2,}/g,'blank');
  if(!state.settings.sound){toast('Sound is off. Turn it on in Family settings.');callbacks.onerror?.();return false;}
  if(!audioReady){toast('No English voice is available on this device. Use the text button to keep practicing.');callbacks.onerror?.();return false;}
  stopAudio();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.voice=voices.find(v=>/^en[-_]US$/i.test(v.lang))||voices[0];utterance.rate=slow?.82:.95;utterance.pitch=1;
